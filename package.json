@@ -1,0 +1,25 @@
+{
+  "name": "app-tracker-api",
+  "version": "1.0.0",
+  "description": "The API for a simple MERN-stack app to track the job application journey of a junior dev.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shame-wizards-apprentice/app-tracker-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shame-wizards-apprentice/app-tracker-api/issues"
+  },
+  "homepage": "https://github.com/shame-wizards-apprentice/app-tracker-api#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.2"
+  }
+}
