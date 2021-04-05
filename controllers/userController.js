@@ -8,6 +8,27 @@ const config = require('../config/auth')
 // Express router
 const router = express.Router();
 
+// Handle user authentication
+const authenticateMe = req => {
+    let token = false;
+    // Check for authorization headers, assign token if found
+    req.headers.authorization ? token = req.headers.authorization.split(" ")[1] : token = false
+    // If token is found, authenticate user
+    let data = false
+    if (token) {
+        data = jwt.verify(token, config.secret, (err, data) => {
+            if (err) {
+                return false
+            } else {
+                return data
+            }
+        });
+    }
+    // If verification succeeds, send back user data
+    return data
+}
+
+
 // Signup route
 router.post('/signup', (req, res) => {
     db.User.create({
@@ -19,6 +40,7 @@ router.post('/signup', (req, res) => {
         err ? res.status(500).send(`Error creating user: ${err.message}`) : res.status(200).send('Success!')
     });
 });
+
 
 // Login route
 router.post('/login', (req, res) => {
@@ -38,7 +60,7 @@ router.post('/login', (req, res) => {
             });
             res.json({
                 user: data, token
-            })
+            });
         } else {
             res.status(401).send("We don't serve your kind here.")
         }
@@ -47,9 +69,9 @@ router.post('/login', (req, res) => {
     });
 });
 
+
 // Authentication route
 router.get('/vip', (req, res) => {
-    console.log(`Here's the headers: ${req.headers.authorization}`)
     let tokenData = authenticateMe(req);
     if (tokenData) {
         db.User.findOne({
@@ -60,38 +82,10 @@ router.get('/vip', (req, res) => {
             res.json(data)
         }).catch(err => {
             err ? res.status(500).send(`Error verifying user: ${err.message}`) : res.status(200).send('Success!')
-        })
+        });
     } else {
         res.status(404).send('The details of your incompetence do not interest me.')
     }
-})
-
-
-// Handle user authentication
-const authenticateMe = req => {
-    let token = false;
-    // Check for authorization headers, assign token if found
-    req.headers.authorization ? token = req.headers.authorization.split(" ")[1] : token = false
-
-    // If token is found, authenticate user
-    let data = false
-    if (token) {
-        console.log(`Here's our token: ${token}`)
-        data = jwt.verify(token, config.secret, (err, data) => {
-            if (err) {
-                console.log(`Here's the auth error: ${err.message}`)
-                return false
-            } else {
-                console.log(`Here is token data: ${data}`)
-                return data
-            }
-        })
-    }
-
-    // If verification succeeds, send back user data
-    return data
-}
-
-
+});
 
 module.exports = router;

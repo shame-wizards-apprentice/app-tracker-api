@@ -25,6 +25,9 @@ app.get("/", (req, res) => {
 const userRoutes = require('./controllers/userController');
 app.use(userRoutes);
 
+const appRoutes = require('./controllers/applicationController');
+app.use(appRoutes);
+
 // Start server
 db.sequelize.sync({ force: false }).then(() => {
     app.listen(PORT, () => {
