@@ -1,6 +1,7 @@
-// Set up MySQL connection.
+// Dependencies
 const mysql = require('mysql2');
 
+// Configure db connection
 let connection;
 if (process.env.JAWSDB_URL) {
   connection = mysql.createConnection(process.env.JAWSDB_URL);
@@ -14,7 +15,6 @@ if (process.env.JAWSDB_URL) {
   });
 };
 
-// Make connection
 connection.connect(err => {
   err ? console.error(`Error connecting to database: ${err.stack}`) : console.log(`Connected as id ${connection.threadId}`)
 });
