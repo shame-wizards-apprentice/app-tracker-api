@@ -31,7 +31,7 @@ const authenticateMe = req => {
 
 
 // Add new application
-router.post('/app', (req, res) => {
+router.post('/applications', (req, res) => {
     const tokenData = authenticateMe(req);
     db.Application.create({
         company: req.body.company,
@@ -44,13 +44,13 @@ router.post('/app', (req, res) => {
     }).then(data => {
         res.json(data)
     }).catch(err => {
-        err ? res.status(500).send(`Error creating application: ${err.message}`) : res.status(200).send('Success!')
+        err ? res.status(400).send(`Error creating application: ${err.message}`) : res.status(200).send('Success!')
     });
 });
 
 
 // View user's applications
-router.get('/app', (req, res) => {
+router.get('/applications', (req, res) => {
     const tokenData = authenticateMe(req);
     db.Application.findAll({
         where: {
@@ -60,17 +60,17 @@ router.get('/app', (req, res) => {
         // If user has no applications, tell them no applications found
         !data ? res.status(404).send('No applications found.') : data === [] ? res.status(404).send('No applications found.') : res.json(data)
     }).catch(err => {
-        err ? res.status(500).send(`Error finding applications: ${err.message}`) : res.status(200).send('Success!')
+        err ? res.status(400).send(`Error finding applications: ${err.message}`) : res.status(200).send('Success!')
     });
 });
 
 
 // Update an application
-router.put('/app/:id', (req, res) => {
+router.put('/applications/:id', (req, res) => {
     const tokenData = authenticateMe(req)
     // Check for authenticated user, send back forbidden error if none found
     if (!tokenData) {
-        res.status(403).send('You must login to update an application.')
+        res.status(401).send('You must login to update an application.')
     } else {
         db.Application.update({
             company: req.body.company,
@@ -86,17 +86,17 @@ router.put('/app/:id', (req, res) => {
         }).then(data => {
             res.json(data)
         }).catch(err => {
-            err ? res.status(500).send(`Error updating application: ${err.message}`) : res.status(200).send('Success!')
+            err ? res.status(400).send(`Error updating application: ${err.message}`) : res.status(200).send('Success!')
         });
     }
 });
 
 // Delete an application
-router.delete('/app/:id', (req, res) => {
+router.delete('/applications/:id', (req, res) => {
     const tokenData = authenticateMe(req);
     // Check for authenticated user, send back forbidden error if none found
     if (!tokenData) {
-        res.status(403).send('You must login to delete an application.')
+        res.status(401).send('You must login to delete an application.')
     } else {
         db.Application.destroy({
             where: {
@@ -106,7 +106,7 @@ router.delete('/app/:id', (req, res) => {
         }).then(data => {
             res.json(data)
         }).catch(err => {
-            err ? res.status(500).send(`Error deleting application: ${err.message}`) : res.status(200).send('Success!')
+            err ? res.status(400).send(`Error deleting application: ${err.message}`) : res.status(200).send('Success!')
         });
     }
 });

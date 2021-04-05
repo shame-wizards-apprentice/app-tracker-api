@@ -30,20 +30,20 @@ const authenticateMe = req => {
 
 
 // Signup route
-router.post('/signup', (req, res) => {
+router.post('/user/new', (req, res) => {
     db.User.create({
         username: req.body.username,
         password: req.body.password
     }).then(data => {
         res.json(data)
     }).catch(err => {
-        err ? res.status(500).send(`Error creating user: ${err.message}`) : res.status(200).send('Success!')
+        err ? res.status(400).send(`Signup error: ${err.message}`) : res.status(200).send('Success!')
     });
 });
 
 
 // Login route
-router.post('/login', (req, res) => {
+router.post('/user', (req, res) => {
     db.User.findOne({
         where: {
             username: req.body.username
@@ -65,7 +65,7 @@ router.post('/login', (req, res) => {
             res.status(401).send("We don't serve your kind here.")
         }
     }).catch(err => {
-        err ? res.status(500).send(`Error loggin in: ${err.message}`) : res.status(200).send('Success!')
+        err ? res.status(400).send(`Error logging in: ${err.message}`) : res.status(200).send('Success!')
     });
 });
 
@@ -81,7 +81,7 @@ router.get('/user', (req, res) => {
         }).then(data => {
             res.json(data)
         }).catch(err => {
-            err ? res.status(500).send(`Error verifying user: ${err.message}`) : res.status(200).send('Success!')
+            err ? res.status(400).send(`Error verifying user: ${err.message}`) : res.status(200).send('Success!')
         });
     } else {
         res.status(404).send('The details of your incompetence do not interest me.')
