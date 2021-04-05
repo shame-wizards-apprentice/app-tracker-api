@@ -2,14 +2,24 @@
 const express = require('express')
 const cors = require('cors')
 
-// Environment variables
-// Port
+// Port environment variables
 const PORT = process.env.PORT || 8081;
 
 // Express server instance
 const app = express();
 
+// Cors config
+const whitelist = ['http://localhost:3000']
+
+const corsOptions = {
+    origin: whitelist,
+    credentials: true,
+    optionSuccessStatus: 200,
+    methods: "GET, HEAD, POST, PUT, DELETE"
+}
+
 // Middleware
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
