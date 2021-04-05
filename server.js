@@ -1,12 +1,14 @@
 // Dependencies
-const express = require('express')
-const cors = require('cors')
+const express = require('express');
+const cors = require('cors');
+const apicache = require('apicache');
 
 // Port environment variables
 const PORT = process.env.PORT || 8081;
 
-// Express server instance
+// Server and cache instance
 const app = express();
+let cache = apicache.middleware;
 
 // Cors config
 const whitelist = ['http://localhost:3000']
@@ -22,6 +24,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cache('5 minutes'));
 
 // Access sequelize database
 const db = require('./models');

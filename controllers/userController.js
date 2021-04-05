@@ -30,7 +30,7 @@ const authenticateMe = req => {
 
 
 // Signup route
-router.post('/user/new', (req, res) => {
+router.post('/users/new', (req, res) => {
     db.User.create({
         username: req.body.username,
         password: req.body.password
@@ -43,7 +43,7 @@ router.post('/user/new', (req, res) => {
 
 
 // Login route
-router.post('/user', (req, res) => {
+router.post('/users', (req, res) => {
     db.User.findOne({
         where: {
             username: req.body.username
@@ -71,7 +71,7 @@ router.post('/user', (req, res) => {
 
 
 // Authentication route
-router.get('/user', (req, res) => {
+router.get('/users', (req, res) => {
     let tokenData = authenticateMe(req);
     if (tokenData) {
         db.User.findOne({
