@@ -71,7 +71,7 @@ router.get('/vip', (req, res) => {
 const authenticateMe = req => {
     let token = false;
     // Check for authorization headers, assign token if found
-    !req.headers ? token = false : !req.headers.authorization ? token = false : token = req.headers.authorization.split(" ")[1]
+    req.headers.authorization ? token = req.headers.authorization.split(" ")[1] : token = false
 
     // If token is found, authenticate user
     let data = false
