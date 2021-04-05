@@ -44,6 +44,6 @@ app.use(appRoutes);
 // Start server
 db.sequelize.sync({ force: false }).then(() => {
     app.listen(PORT, () => {
-        console.log('App listening on PORT ' + PORT);
+        console.log(`App listening on port ${PORT}`);
     })
 });
