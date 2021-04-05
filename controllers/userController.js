@@ -71,7 +71,7 @@ router.post('/login', (req, res) => {
 
 
 // Authentication route
-router.get('/vip', (req, res) => {
+router.get('/user', (req, res) => {
     let tokenData = authenticateMe(req);
     if (tokenData) {
         db.User.findOne({

@@ -31,7 +31,7 @@ const authenticateMe = req => {
 
 
 // Add new application
-router.post('/app/new', (req, res) => {
+router.post('/app', (req, res) => {
     const tokenData = authenticateMe(req);
     db.Application.create({
         company: req.body.company,
@@ -50,7 +50,7 @@ router.post('/app/new', (req, res) => {
 
 
 // View user's applications
-router.get('/app/view', (req, res) => {
+router.get('/app', (req, res) => {
     const tokenData = authenticateMe(req);
     db.Application.findAll({
         where: {
@@ -66,7 +66,7 @@ router.get('/app/view', (req, res) => {
 
 
 // Update an application
-router.put('/app/update/:id', (req, res) => {
+router.put('/app/:id', (req, res) => {
     const tokenData = authenticateMe(req)
     // Check for authenticated user, send back forbidden error if none found
     if (!tokenData) {
@@ -92,7 +92,7 @@ router.put('/app/update/:id', (req, res) => {
 });
 
 // Delete an application
-router.delete('/app/delete/:id', (req, res) => {
+router.delete('/app/:id', (req, res) => {
     const tokenData = authenticateMe(req);
     // Check for authenticated user, send back forbidden error if none found
     if (!tokenData) {
