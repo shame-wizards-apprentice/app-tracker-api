@@ -21,7 +21,7 @@ const corsOptions = {
 }
 
 // Middleware
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cache('5 minutes'));
