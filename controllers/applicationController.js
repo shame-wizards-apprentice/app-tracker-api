@@ -116,17 +116,14 @@ router.put(`/applications/:id`, (req, res) => {
 
 // Delete an application
 router.delete(`/applications/:id`, (req, res) => {
-    console.log(`Requesting to delete application id ${req.params.id}`)
     if (!req.params.id) {
         res.status(400).send(`Which one, fool?`)
     } else {
-        console.log(`You've made it to the authentication stage, pal.`)
         const tokenData = authenticateMe(req);
         // Check for authenticated user, send back forbidden error if none found
         if (!tokenData) {
             res.status(401).send(`You must login to delete an application.`)
         } else {
-            console.log(`Requesting to delete application id ${req.params.id} with user id ${tokenData.id}`)
             db.Application.destroy({
                 where: {
                     UserId: tokenData.id,
