@@ -1,9 +1,9 @@
 // Dependencies
-const bcrypt = require('bcrypt')
+const bcrypt = require(`bcrypt`)
 
 // Create Users table
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define("User", {
+    const User = sequelize.define(`User`, {
         username: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     // Application association
     User.associate = (models) => {
         User.hasMany(models.Application, {
-            onDelete: "cascade"
+            onDelete: `cascade`
         });
     }
 
