@@ -38,7 +38,17 @@ router.post(`/users/new`, (req, res) => {
             username: req.body.username,
             password: req.body.password
         }).then(data => {
-            res.json(data)
+            if(data) {
+                const token = jwt.sign({
+                    username: data.username,
+                    id: data.id
+                }, config.secret, {
+                    expiresIn: `2h`
+                });
+                res.json({
+                    user: data, token
+                });
+            }
         }).catch(err => {
             err ? res.send(`Signup error: ${err.message}`) : res.status(200).send(`Success!`)
         });
